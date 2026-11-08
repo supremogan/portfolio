@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://johnfuentes.dev/sitemap.xml

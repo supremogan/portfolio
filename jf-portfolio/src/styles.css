@@ -1,0 +1,96 @@
+@import 'tailwindcss';
+
+@custom-variant dark (&:is(.dark *));
+
+/* shadcn/ui theme tokens — palette: #0038ff + #d6e3ff */
+:root {
+  --radius: 1.25rem;
+  --background: #f4f7ff;
+  --foreground: #0b1437;
+  --card: #ffffff;
+  --card-foreground: #0b1437;
+  --primary: #0038ff;
+  --primary-foreground: #ffffff;
+  --secondary: #d6e3ff;
+  --secondary-foreground: #0038ff;
+  --muted: #eaf0ff;
+  --muted-foreground: #5a6585;
+  --accent: #d6e3ff;
+  --accent-foreground: #0038ff;
+  --border: #dbe4fb;
+  --input: #dbe4fb;
+  --ring: #0038ff;
+}
+
+.dark {
+  --background: #070d24;
+  --foreground: #eaf0ff;
+  --card: #0e1736;
+  --card-foreground: #eaf0ff;
+  --primary: #3d6bff;
+  --primary-foreground: #ffffff;
+  --secondary: #16245a;
+  --secondary-foreground: #cfdcff;
+  --muted: #101a40;
+  --muted-foreground: #9aa8d4;
+  --accent: #16245a;
+  --accent-foreground: #cfdcff;
+  --border: #1d2a5a;
+  --input: #1d2a5a;
+  --ring: #3d6bff;
+}
+
+@theme inline {
+  --font-sans: 'Poppins', ui-sans-serif, system-ui, sans-serif;
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --radius-lg: var(--radius);
+  --radius-md: calc(var(--radius) - 6px);
+  --radius-sm: calc(var(--radius) - 10px);
+
+  --animate-marquee: marquee 32s linear infinite;
+  --animate-float: float 5s ease-in-out infinite;
+  --animate-shine: shine 4s linear infinite;
+  --animate-pulse-soft: pulse-soft 1.6s ease-in-out infinite;
+
+  @keyframes marquee { to { transform: translateX(-50%); } }
+  @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+  @keyframes shine { to { background-position: 200% center; } }
+  @keyframes pulse-soft { 0%, 100% { opacity: 1; } 50% { opacity: 0.35; } }
+  @keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes fade-out { from { opacity: 1; } to { opacity: 0; } }
+  @keyframes dialog-in {
+    from { opacity: 0; transform: translate(-50%, -46%) scale(0.96); }
+    to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+  }
+}
+
+@layer base {
+  * { @apply border-border; }
+  html { scroll-behavior: smooth; }
+  body { @apply bg-background text-foreground font-sans antialiased transition-colors duration-300; }
+  :focus-visible { @apply outline-2 outline-offset-2 outline-ring; }
+}
+
+/* Scroll-reveal (toggled by IntersectionObserver in App.jsx) */
+.reveal { opacity: 0; transform: translateY(26px); transition: opacity 0.7s ease, transform 0.7s ease; }
+.reveal.in { opacity: 1; transform: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+  .reveal { opacity: 1; transform: none; }
+}
