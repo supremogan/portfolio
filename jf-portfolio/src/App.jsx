@@ -2,6 +2,7 @@ import { useEffect, useState, useCallback } from 'react'
 import { List, X } from '@phosphor-icons/react'
 import Sidebar from './components/Sidebar'
 import Marquee from './components/Marquee'
+import Loader from './components/Loader'
 import { Hero, IntroCard, Projects, Credentials, About, Services, Contact } from './components/Sections'
 import { Button } from '@/components/ui/button'
 import { NAV, TOOLS } from './data'
@@ -10,6 +11,8 @@ export default function App() {
   const [active, setActive] = useState('home')
   const [dark, setDark] = useState(false)
   const [open, setOpen] = useState(false)
+  const [loading, setLoading] = useState(true)
+  const finishLoading = useCallback(() => setLoading(false), [])
 
   const navigate = useCallback((id) => {
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
@@ -22,6 +25,7 @@ export default function App() {
 
   // Scroll reveal animation
   useEffect(() => {
+    if (loading) return // start reveals once the loader has gone
     const io = new IntersectionObserver(
       (entries) =>
         entries.forEach((e) => {
@@ -34,7 +38,7 @@ export default function App() {
     )
     document.querySelectorAll('.reveal').forEach((el) => io.observe(el))
     return () => io.disconnect()
-  }, [])
+  }, [loading])
 
   // Active nav highlighting
   useEffect(() => {
@@ -51,6 +55,7 @@ export default function App() {
 
   return (
     <div className="min-h-screen">
+      {loading && <Loader onDone={finishLoading} />}
       <Button
         size="icon"
         className="fixed left-3.5 top-3.5 z-50 rounded-xl lg:hidden"
